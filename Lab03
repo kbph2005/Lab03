@@ -1,54 +1,42 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+library ieee;
+use ieee. std_logic_1164.all;
 
-entity SegDecoder is
+entity Lab03 is
+-- defining inputs/outputs
     Port (
-        D : in  STD_LOGIC_VECTOR (3 downto 0);
-        Y : out STD_LOGIC_VECTOR (6 downto 0)
+        SW : in   std_logic_vector (17 downto 0);
+        HEX0, HEX1 : out  std_logic_vector (6 downto 0)
     );
 end Lab03;
 
-architecture SegFunc of SegDecoder is
+--describing the architecture of Lab03 entity 
+architecture Lab03Func of Lab03 is	
+-- describing two signals to divide SW switches into 2 and map those two parts to SW0/1
+	signal SW0 : std_logic_vector(3 downto 0);
+	signal SW1 : std_logic_vector(3 downto 0);
+
+component SegDecoder -- refers to file SegDecoder.vhd
+-- adding component from the file SegDecoder, which has the light mappings of 0-F in binary 
+	Port ( 
+				D : in  std_logic_vector (3 downto 0);
+				Y : out std_logic_vector (6 downto 0)
+			);
+	end component;
+	
 begin
-    Y(0) <= (not D(0) or not D(1) or not D(2) or D(3)) and
-            (not D(0) or D(1) or not D(2) or D(3)) and
-            (D(0) or not D(1) or D(2) or D(3)) and
-            (D(0) or D(1) or not D(2) or not D(3)) and
-            (D(0) or not D(1) or D(2) or D(3));
-
-    Y(1) <= (not D(0) or D(1) or not D(2) or D(3)) and
-            (not D(0) or D(1) or D(2) or not D(3)) and
-            (D(0) or not D(1) or D(2) or D(3)) and
-            (D(0) or D(1) or not D(2) or not D(3)) and
-            (D(0) or D(1) or not D(2) or D(3)) and
-            (D(0) or D(1) or D(2) or D(3));
-
-    Y(2) <= (not D(0) or not D(1) or D(2) or not D(3)) and
-            (not D(0) or D(1) or D(2) or not D(3)) and
-            (D(0) or D(1) or not D(2) or not D(3)) and
-            (D(0) or D(1) or D(2) or not D(3)) and
-            (D(0) or D(1) or D(2) or D(3));
-
-    Y(3) <= (not D(0) or not D(1) or not D(2) or D(3)) and
-            (not D(0) or D(1) or not D(2) or not D(3)) and
-            (not D(0) or D(1) or D(2) or D(3)) and
-            (D(0) or not D(1) or D(2) or not D(3)) and
-            (D(0) or D(1) or D(2) or D(3));
-
-    Y(4) <= (not D(0) or not D(1) or not D(2) or D(3)) and
-            (not D(0) or not D(1) or D(2) or D(3)) and
-            (not D(0) or D(1) or not D(2) or not D(3)) and
-            (not D(0) or D(1) or not D(2) or D(3)) and
-            (not D(0) or D(1) or D(2) or D(3)) and
-            (D(0) or not D(1) or not D(2) or D(3));
-
-    Y(5) <= (not D(0) or not D(1) or not D(2) or D(3)) and
-            (not D(0) or not D(1) or D(2) or not D(3)) and
-            (D(0) or D(1) or D(2) or D(3));
-
-    Y(6) <= (not D(0) or not D(1) or not D(2) or D(3)) and
-            (not D(0) or not D(1) or not D(2) or not D(3)) and
-            (not D(0) or D(1) or D(2) or D(3)) and
-            (D(0) or D(1) or D(2) or D(3));
-
-end Behavioral;
+	-- splitting SW in half and mapping its pins to SW0/1 
+	SW0 <= SW(3 downto 0);
+	SW1 <= SW(7 downto 4);
+	
+	-- port map to instantiate SegDecoder as a subcircuit. D and Y to first 7-segment HEX0 and switch SW0 [aka SW(3 downto 0)]
+	subcircuit01 : SegDecoder port map (
+								D => SW0,
+								Y => HEX0
+						);
+	-- port map to instantiate SegDecoder as a subcircuit. D and Y to second 7-segment HEX1 and switch SW1 [aka SW(7 downto 4)]
+	subcircuit02 : SegDecoder port map (
+								D => SW1,
+								Y => HEX1
+						);
+	
+end Lab03Func;
