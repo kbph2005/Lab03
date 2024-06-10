@@ -1,0 +1,54 @@
+library ieee;
+use ieee. std_logic_1164.all;
+
+entity SegDecoder is
+    Port (
+        D : in  std_logic_vector (3 downto 0);
+        Y : out std_logic_vector (6 downto 0)
+    );
+end SegDecoder;
+
+architecture SegFunc of SegDecoder is
+begin
+    Y(0) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or D(3)) and
+            (D(0) or not D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or not D(1) or D(2) or D(3));
+
+    Y(1) <= (not D(0) or D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or not D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or D(1) or not D(2) or D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(2) <= (not D(0) or not D(1) or D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(3) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or not D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(4) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or not D(1) or not D(2) or D(3));
+
+    Y(5) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(6) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+end SegFunc;
