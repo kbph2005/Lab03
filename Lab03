@@ -1,0 +1,54 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Lab03 is
+    Port (
+        D : in  STD_LOGIC_VECTOR (3 downto 0);
+        Y : out STD_LOGIC_VECTOR (6 downto 0)
+    );
+end Lab03;
+
+architecture Behavioral of Lab03 is
+begin
+    Y(0) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or D(3)) and
+            (D(0) or not D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or not D(1) or D(2) or D(3));
+
+    Y(1) <= (not D(0) or D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or not D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or D(1) or not D(2) or D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(2) <= (not D(0) or not D(1) or D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or not D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(3) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or not D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(4) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or D(2) or D(3)) and
+            (not D(0) or D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or not D(2) or D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or not D(1) or not D(2) or D(3));
+
+    Y(5) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or D(2) or not D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+    Y(6) <= (not D(0) or not D(1) or not D(2) or D(3)) and
+            (not D(0) or not D(1) or not D(2) or not D(3)) and
+            (not D(0) or D(1) or D(2) or D(3)) and
+            (D(0) or D(1) or D(2) or D(3));
+
+end Behavioral;
